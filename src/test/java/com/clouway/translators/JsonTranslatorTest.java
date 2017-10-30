@@ -21,8 +21,9 @@ public class JsonTranslatorTest {
     @Test
     public void objectToJsonThanReverseAndUseObject() {
         try {
-            translator.toJsonFile(new Person(29, "Bob"), "TranslatedObject.json");
-            File file = new File("TranslatedObject.json");
+            translator.toJsonFile(new Person(29, "Bob", "Red"),
+                    "src/test/TranslatedObject.json");
+            File file = new File("src/test/TranslatedObject.json");
             Person person = translator.toObjectFromFile(file, Person.class);
 
             assertThat(person.getAge(), equalTo(29));
@@ -34,10 +35,10 @@ public class JsonTranslatorTest {
     @Test
     public void objectToJsonStringThanReverseAndUseObject() {
         try {
-            String jsonString = translator.toJsonString(new Person(29, "Bob"));
+            String jsonString = translator.toJsonString(new Person(29, "Bob", "Red"));
             Person person = translator.toObjectFromString(jsonString, Person.class);
 
-            assertThat(person.getName(), equalTo("Bob"));
+            assertThat(person.getFirstName(), equalTo("Bob"));
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
@@ -46,18 +47,19 @@ public class JsonTranslatorTest {
     @Test
     public void jsonStringToObjectsList() {
         try {
-            String jsonString = "[{\"age\":29,\"name\":\"Bob\"}," +
-                    "{\"age\":29,\"name\":\"Bob\"}," +
-                    "{\"age\":29,\"name\":\"Bob\"}," +
-                    "{\"age\":29,\"name\":\"Bob\"}," +
-                    "{\"age\":29,\"name\":\"Bob\"}," +
-                    "{\"age\":29,\"name\":\"Bob\"}," +
-                    "{\"age\":29,\"name\":\"Bob\"}]\n";
+            String jsonString = "[{\"age\":29,\"firstName\":\"Bob\"}," +
+                    "{\"age\":29,\"firstName\":\"Bob\"}," +
+                    "{\"age\":29,\"firstName\":\"Bob\"}," +
+                    "{\"age\":29,\"firstName\":\"Bob\"}," +
+                    "{\"age\":29,\"firstName\":\"Bob\",\"lastName\":\"Red\"}," +
+                    "{\"age\":29,\"firstName\":\"Bob\"}," +
+                    "{\"age\":29,\"firstName\":\"Bob\"}]\n";
 
             List<Person> people = translator.toObjectFromString(jsonString, new TypeReference<List<Person>>() {
             });
 
-            assertThat(people.get(1).getAge(), equalTo(29));
+            assertThat(people.get(0).getAge(), equalTo(29));
+            assertThat(people.get(4).getLastName(), equalTo("Red"));
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
