@@ -6,21 +6,26 @@ package com.clouway.main;
 public class Person {
 
     private Integer age;
-    private String name;
+    private String firstName, lastName;
 
     public Person() {
     }
 
-    public Person(Integer age, String name) {
+    public Person(Integer age, String firstName, String lastName) {
         this.age = age;
-        this.name = name;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public Integer getAge() {
         return age;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 }

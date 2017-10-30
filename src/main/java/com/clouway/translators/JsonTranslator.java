@@ -10,7 +10,7 @@ import java.io.IOException;
 /**
  * @author David Kostov (david.kostov.cw@gmail.com)
  */
-class JsonTranslator {
+public class JsonTranslator {
 
     private ObjectMapper mapper;
 

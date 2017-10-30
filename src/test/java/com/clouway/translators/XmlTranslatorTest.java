@@ -21,8 +21,9 @@ public class XmlTranslatorTest {
     public void objectToXmlThanReverseAndUseObject() {
         translator.alias("Person", Person.class);
         try {
-            translator.toXmlFile(new Person(29, "Bob"), "TranslatedObject.xml", "Person");
-            File file = new File("TranslatedObject.xml");
+            translator.toXmlFile(new Person(29, "Bob", "Red"),
+                    "src/test/TranslatedObject.xml", "Person");
+            File file = new File("src/test/TranslatedObject.xml");
             Person person = translator.toObjectFromFile(file);
 
             assertThat(person.getAge(), equalTo(29));
@@ -35,10 +36,10 @@ public class XmlTranslatorTest {
     public void objectToXmlStringThanReverseAndUseObject() {
         translator.alias("Person", Person.class);
 
-        String xmlString = translator.toXmlString(new Person(29, "Bob"), "Person");
+        String xmlString = translator.toXmlString(new Person(29, "Bob", "Red"), "Person");
         Person person = translator.toObjectFromString(xmlString);
 
-        assertThat(person.getName(), equalTo("Bob"));
+        assertThat(person.getFirstName(), equalTo("Bob"));
     }
 
     @Test
@@ -47,12 +48,13 @@ public class XmlTranslatorTest {
 
         String xmlString = "<Person>\n" +
                 "  <age>29</age>\n" +
-                "  <name>Bob</name>\n" +
+                "  <firstName>Bob</firstName>\n" +
+                "  <lastName>Red</lastName>\n" +
                 "</Person>";
 
         Person person = translator.toObjectFromString(xmlString);
 
-        assertThat(person.getAge(), equalTo(29));
+        assertThat(person.getLastName(), equalTo("Red"));
     }
 
 }
